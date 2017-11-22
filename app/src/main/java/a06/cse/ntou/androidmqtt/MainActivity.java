@@ -108,21 +108,13 @@ public class MainActivity extends AppCompatActivity {
         return printer;
     }
 
-    public void add_hum(View v){
-        order.add(new meal("漢堡","火腿蛋漢堡",1));
-    }
-
-    public void add_tos(View v){
-        order.add(new meal("吐司","火腿蛋吐司",1));
-    }
-
-    public void add_soy(View v){
+   /* public void add_soy(View v){
         order.add(new meal("飲料","豆漿",1));
     }
 
     public void del(View v){
         order.clear();
-    }
+    }*/
 }
 
 

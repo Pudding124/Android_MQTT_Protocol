@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,107 +7,189 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="a06.cse.ntou.androidmqtt.MainActivity">
+    tools:context="a06.cse.ntou.androidmqtt.MainActivity"
+    android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="publish"
-        android:onClick="pub"
-        android:id="@+id/button"
-        android:layout_alignTop="@+id/subText"
-        android:layout_alignParentEnd="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.90">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/subText"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="培根蛋吐司"
-        android:id="@+id/food_tos"
-        android:layout_marginTop="69dp"
-        android:layout_below="@+id/food_hum"
-        android:layout_toStartOf="@+id/subText" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="火腿漢堡漢堡"
-        android:id="@+id/food_hum"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/food_tos"
-        android:layout_marginTop="60dp" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:text="使用者ID" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="豆漿"
-        android:id="@+id/drink_soy"
-        android:layout_below="@+id/food_tos"
-        android:layout_alignStart="@+id/food_tos"
-        android:layout_marginTop="77dp" />
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="輸入使用者帳號" />
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="add"
-        android:id="@+id/hum_add"
-        android:onClick="add_hum"
-        android:layout_above="@+id/food_tos"
-        android:layout_alignEnd="@+id/subText" />
+            </LinearLayout>
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="DEL"
-        android:id="@+id/hum_del"
-        android:onClick="del"
-        android:layout_above="@+id/food_tos"
-        android:layout_alignStart="@+id/button" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="ADD"
-        android:id="@+id/tos_add"
-        android:onClick="add_tos"
-        android:layout_alignTop="@+id/food_tos"
-        android:layout_alignEnd="@+id/subText" />
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:text="餐點類型" />
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="DEL"
-        android:id="@+id/tos_del"
-        android:layout_alignTop="@+id/tos_add"
-        android:layout_alignStart="@+id/hum_del" />
+                <EditText
+                    android:id="@+id/editText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="輸入餐點種類" />
+            </LinearLayout>
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="ADD"
-        android:id="@+id/soy_add"
-        android:onClick="add_soy"
-        android:layout_alignTop="@+id/drink_soy"
-        android:layout_alignStart="@+id/tos_add" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
 
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="DEL"
-        android:id="@+id/soy_del"
-        android:layout_alignTop="@+id/soy_add"
-        android:layout_alignStart="@+id/tos_del" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:text="餐點名稱" />
 
-</RelativeLayout>
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="輸入餐點名稱" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:text="餐點數量" />
+
+                <EditText
+                    android:id="@+id/editText4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="輸入餐點數量" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:text="總價錢" />
+
+                <EditText
+                    android:id="@+id/editText5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="輸入總價錢" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:text="送出時間" />
+
+                <EditText
+                    android:id="@+id/editText6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.90"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="輸入目前時間" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_addmeal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="將餐點加入訂單" />
+
+                <Button
+                    android:id="@+id/btn_sendorder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="送出訂單" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_orderstatus"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="訂單狀態" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
