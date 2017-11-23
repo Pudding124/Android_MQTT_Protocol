@@ -3,6 +3,8 @@ package a06.cse.ntou.androidmqtt;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,74 +28,78 @@ public class MainActivity extends AppCompatActivity {
     static String MQTTHOST = "你的網址";
     static String USERNAME = "帳號";
     static String PASSWORD = "密碼";
-    String topicStr = "test1";
+    EditText ed_userid,ed_mealtype,ed_mealname, ed_mealnumber,ed_sumprice,ed_currenttime;
+    TextView tv_orderstatus;
+    Button btn_sendorder;
+    String Hostboard = "CustomerOrder";
     MqttAndroidClient client;
-    TextView subText;
-    TextView food_hum;
-    TextView food_tos;
-    TextView drink_soy;
+    MqttConnectOptions options;
 
     private static List<meal> order= new ArrayList<>();
-    static String id = "pudding"; //假設已抓取目前顧客之id 將其裝進JSON
-    static String time ="09/25"; //抓取目前時間
-    static int sum = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        subText = (TextView)findViewById(R.id.subText);
-        food_hum = (TextView)findViewById(R.id.food_hum);
-        food_tos = (TextView)findViewById(R.id.food_tos);
-        drink_soy = (TextView)findViewById(R.id.drink_soy);
+        ed_userid = (EditText)findViewById(R.id.ed_userid);
+        ed_mealtype = (EditText)findViewById(R.id.ed_mealtype);
+        ed_mealname = (EditText)findViewById(R.id.ed_mealname);
+        ed_mealnumber = (EditText)findViewById(R.id.ed_mealnumber);
+        ed_sumprice = (EditText)findViewById(R.id.ed_sumprice);
+        ed_currenttime = (EditText)findViewById(R.id.ed_currenttime);
+        tv_orderstatus = (TextView)findViewById(R.id.tv_orderstatus);
+        btn_sendorder = (Button)findViewById(R.id.btn_sendorder);
 
         String clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(this.getApplicationContext(), MQTTHOST, clientId);
-        MqttConnectOptions options = new MqttConnectOptions();
+        options = new MqttConnectOptions();
         options.setUserName(USERNAME);
         options.setPassword(PASSWORD.toCharArray());
 
-        try {
-            IMqttToken token = client.connect(options);
-            token.setActionCallback(new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) { // 連線成功 欲執行的程式
-                    Toast.makeText(MainActivity.this,"connected!",Toast.LENGTH_LONG).show();
-                    setSubscription();
-                }
+        btn_sendorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String Send_to_Boss = Hostboard;
+                final String getTopic = ed_userid.getText().toString();
+                final String getTime = ed_currenttime.getText().toString();
+                final int getSum = Integer.parseInt(ed_sumprice.getText().toString());
+                final String message = Send_Order_to_Host(getTopic,getTime,getSum,order);
+                try{
+                    IMqttToken token = client.connect(options);
+                    token.setActionCallback(new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) { // 連線成功 欲執行的程式
+                            Toast.makeText(MainActivity.this,"connected!",Toast.LENGTH_LONG).show();
+                            try {
+                                client.subscribe(getTopic,0);  // 訂閱顧客本身的看板
+                                client.publish(Send_to_Boss, message.getBytes(),0,false); //推播訂單給老闆的看板
+                            } catch (MqttException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    // Something went wrong e.g. connection timeout or firewall problems
-                    Toast.makeText(MainActivity.this,"connected failed!",Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (MqttException e) {e.printStackTrace();}
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            // Something went wrong e.g. connection timeout or firewall problems
+                            Toast.makeText(MainActivity.this,"connected failed!",Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }catch(MqttException e){e.printStackTrace();}
+            }
+        });
 
         client.setCallback(new MqttCallback() { // 收到訂閱之看板的回傳訊息
             @Override
             public void connectionLost(Throwable throwable) { Toast.makeText(MainActivity.this," connection Lost!",Toast.LENGTH_LONG).show();}
 
             @Override
-            public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {subText.setText(new String(mqttMessage.getPayload()));}
+            public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+               tv_orderstatus.setText(new String(mqttMessage.getPayload()));
+            }
 
             @Override
             public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {}
         });
-    }
-
-    public void pub(View v){  // 放置想要推播的訊息
-        String topic = topicStr;
-        String message = Send_Order_to_Host(id,time,sum,order);;
-        try {
-            client.publish(topic, message.getBytes(),0,false);
-        } catch (MqttException e) {e.printStackTrace();}
-    }
-
-    private void setSubscription(){ // 想訂閱的看板
-        try{
-            client.subscribe(topicStr,0);
-        }catch(MqttException e){e.printStackTrace();}
     }
 
     public static String Send_Order_to_Host(String id,String time,int Sumprice,List list) { // 將選取的餐點資訊丟進來會用Gson包好
@@ -108,13 +114,16 @@ public class MainActivity extends AppCompatActivity {
         return printer;
     }
 
-   /* public void add_soy(View v){
-        order.add(new meal("飲料","豆漿",1));
+   public void addmeal(View v){
+       String getMealtype = ed_mealtype.getText().toString();
+       String getMealname = ed_mealname.getText().toString();
+       int getMealnumber = Integer.parseInt(ed_mealnumber.getText().toString());
+       order.add(new meal(getMealtype, getMealname, getMealnumber));
+       ed_mealtype.setText("");
+       ed_mealname.setText("");
+       ed_mealnumber.setText("");
     }
 
-    public void del(View v){
-        order.clear();
-    }*/
 }
 
 

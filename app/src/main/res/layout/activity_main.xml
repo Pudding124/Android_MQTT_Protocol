@@ -34,13 +34,13 @@
                     android:text="使用者ID" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/ed_userid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.90"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="輸入使用者帳號" />
+                    android:hint="輸入使用者帳號" />
 
             </LinearLayout>
 
@@ -58,13 +58,13 @@
                     android:text="餐點類型" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/ed_mealtype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.90"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="輸入餐點種類" />
+                    android:hint="輸入餐點種類" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,13 +81,13 @@
                     android:text="餐點名稱" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/ed_mealname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.90"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="輸入餐點名稱" />
+                    android:hint="輸入餐點名稱" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,13 +104,13 @@
                     android:text="餐點數量" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/ed_mealnumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.90"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="輸入餐點數量" />
+                    android:hint="輸入餐點數量" />
             </LinearLayout>
 
             <LinearLayout
@@ -127,13 +127,13 @@
                     android:text="總價錢" />
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/ed_sumprice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.90"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="輸入總價錢" />
+                    android:hint="輸入總價錢" />
             </LinearLayout>
 
             <LinearLayout
@@ -150,13 +150,13 @@
                     android:text="送出時間" />
 
                 <EditText
-                    android:id="@+id/editText6"
+                    android:id="@+id/ed_currenttime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.90"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="輸入目前時間" />
+                    android:hint="輸入目前時間" />
 
             </LinearLayout>
 
@@ -171,6 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:onClick="addmeal"
                     android:text="將餐點加入訂單" />
 
                 <Button
