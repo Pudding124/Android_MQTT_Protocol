@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     String Hostboard = "CustomerOrder";
     MqttAndroidClient client;
     MqttConnectOptions options;
+    OrderRespondBean orderRespondBean;
+    static Gson gson = new Gson();
 
     private static List<meal> order= new ArrayList<>();
 
@@ -94,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-               tv_orderstatus.setText(new String(mqttMessage.getPayload()));
+               //tv_orderstatus.setText(new String(mqttMessage.getPayload()));
+                String re = new String(mqttMessage.getPayload());
+                orderRespondBean = gson.fromJson(re,OrderRespondBean.class);
+                tv_orderstatus.setText("帳戶:"+orderRespondBean.getId()+"訂單狀態:"+orderRespondBean.getOrderStatus()+"訂單序號"+orderRespondBean.getOrderSerialNumber());
             }
 
             @Override
@@ -108,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         bean.setTime(time);
         bean.setSumprice(Sumprice);
         bean.setList(list);
-        Gson gson = new Gson();
         String printer = gson.toJson(bean);
         System.out.println(printer);
         return printer;
